@@ -121,8 +121,3 @@ This project is licensed under the MIT License.
 
 ---
 
-Let me know if you want:
-
-* A **custom badge set** (like "Built with FastAPI" etc.)
-* A **frontend README**
-* Or a **Docker version of this README**.
