@@ -10,5 +10,9 @@ class CPREntry(Base):
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, index=True)
     student_name = Column(String, nullable=False)
     coach_name = Column(String, nullable=False)
-    progress_notes = Column(Text)
+    students_input = Column(Text)
+    coach_reflection = Column(Text)
+    manager_comment = Column(Text)
+    idp = Column(Text)  # individual development plan
+    follow_up = Column(Text)
     created_at = Column(DateTime, default=datetime.utcnow)
