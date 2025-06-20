@@ -1,7 +1,7 @@
 import React from "react";
 
-function TextArea() {
-  return <textarea>TextArea</textarea>;
+function TextArea({ onChange }) {
+  return <textarea onChange={onChange}></textarea>;
 }
 
 export default TextArea;

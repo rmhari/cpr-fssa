@@ -1,7 +1,7 @@
 import React from "react";
 
-function Button() {
-  return <button>Button</button>;
+function Button({ content, onClick }) {
+  return <button onClick={onClick}>{content}</button>;
 }
 
 export default Button;

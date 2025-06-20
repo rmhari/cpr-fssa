@@ -1,9 +1,11 @@
 import React from "react";
 
-function DropDown() {
+function DropDown({ listItems }) {
   return (
     <select>
-      <option></option>
+      {listItems.map((item) => (
+        <option key={item.id}>{item.name}</option>
+      ))}
     </select>
   );
 }
