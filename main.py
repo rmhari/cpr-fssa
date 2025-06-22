@@ -15,5 +15,6 @@ app.include_router(auth.router, prefix="/auth", tags=["Authentication"])
 app.include_router(cpr.router, prefix="/cpr", tags=["CPR"])
 
 @app.get("/")
-def root():
+async def root():
     return {"message": "CPR System Backend is Running!"}
+
