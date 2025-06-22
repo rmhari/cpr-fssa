@@ -16,5 +16,5 @@ app.include_router(cpr.router, prefix="/cpr", tags=["CPR"])
 
 @app.get("/")
 async def root():
-    return {"message": "CPR System Backend is Running!"}
+    return {"message": "CPR System Backend is Running!, Hi and hello"}
 
