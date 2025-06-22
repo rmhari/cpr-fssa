@@ -4,13 +4,14 @@ from datetime import datetime
 import uuid
 
 class CPREntryBase(BaseModel):
+
     student_name: str
-    coach_name: str
-    students_input: Optional[str] = None
-    coach_reflection: Optional[str] = None
-    manager_comment: Optional[str] = None
-    idp: Optional[str] = None  # individual development plan
-    follow_up: Optional[str] = None
+    student_id: uuid.UUID
+    staff_name: str
+    staff_comments: Optional[str] = None
+    manager_comments: Optional[str] = None
+    idp: Optional[str] = None
+    color_code: str
 
 class CPREntryCreate(CPREntryBase):
     pass
@@ -18,6 +19,8 @@ class CPREntryCreate(CPREntryBase):
 class CPREntryResponse(CPREntryBase):
     id: uuid.UUID
     created_at: datetime
+    updated_at: datetime
+
 
     class Config:
         from_attributes = True
