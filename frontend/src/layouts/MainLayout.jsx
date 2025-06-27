@@ -4,9 +4,9 @@ import Navbar from "../components/Navbar";
 
 function MainLayout() {
   return (
-    <div className="flex flex-col w-full bg-background min-h-screen">
+    <div className="w-full h-screen bg-background m-0 p-0 flex flex-col">
       <Navbar />
-      <div className="w-full px-0 overflow-y-auto z-0 flex-grow">
+      <div className="w-full flex-1 px-0 overflow-y-auto z-0 pt-16 bg-white">
         <Outlet />
       </div>
     </div>

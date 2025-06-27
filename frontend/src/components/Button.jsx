@@ -23,6 +23,7 @@ function Button({ content, onClick, isActive = false, disabled = false }) {
       disabled={disabled}
     >
       {content}
+
     </button>
   );
 }

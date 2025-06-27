@@ -1,17 +1,16 @@
-import "./App.css";
-import Button from "./components/Button";
-import Heading from "./components/Heading";
-import Pagination from "./components/Pagination";
-import { useState } from "react";
+import React from "react";
+import { RouterProvider } from "react-router-dom";
+import router from "./routes/routes";
 import Form from "./components/Form";
+
 
 function App() {
   const [currentPage, setCurrentPage] = useState(1);
 
   return (
     <div >
-      {/* <RouterProvider router={router} />   */}
-      {/* <Form /> */}
+      <RouterProvider router={router} />  
+      
       </div>
     
   );
