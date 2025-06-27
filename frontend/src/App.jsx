@@ -2,11 +2,15 @@ import React from "react";
 import { RouterProvider } from "react-router-dom";
 import router from "./routes/routes";
 
+
 function App() {
+  const [currentPage, setCurrentPage] = useState(1);
+
   return (
     <div className="w-full font-sans">
       <RouterProvider router={router} />
     </div>
+
   );
 }
 

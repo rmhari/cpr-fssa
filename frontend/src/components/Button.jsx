@@ -1,24 +1,29 @@
-import React from "react";
+function Button({ content, onClick, isActive = false, disabled = false }) {
+  let bgColor;
+  if (disabled) {
+    bgColor = "#A0A0A0"; // Gray if disabled
+  } else if (isActive) {
+    bgColor = "#3A8BC9"; // Darker dark blue if active
+  } else {
+    bgColor = "#12BEF0"; // Default blue
+  }
 
-function Button({
-  children,
-  onClick,
-  disabled = false,
-  className = "",
-  type = "button",
-  ...props
-}) {
   return (
     <button
-      type={type}
+      className={`m-2 px-3 py-1 text-white font-bold rounded-md transition w-fit
+        ${!disabled && !isActive ? "hover:bg-[#0ea5e9] hover:scale-105" : ""}
+      `}
+      style={{
+        backgroundColor: bgColor,
+        cursor: disabled ? "not-allowed" : "pointer",
+        border: "none",
+        transition: "background-color 0.2s, transform 0.2s"
+      }}
       onClick={onClick}
       disabled={disabled}
-      className={`bg-black text-white rounded-lg px-4 py-2 font-medium transition-all duration-200 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 ${
-        disabled ? "opacity-50 cursor-not-allowed hover:bg-black" : ""
-      } ${className}`}
-      {...props}
     >
-      {children}
+      {content}
+
     </button>
   );
 }
