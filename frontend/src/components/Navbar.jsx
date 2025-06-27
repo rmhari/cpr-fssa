@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "./Image";
-import { NAVBAR_ITEMS } from "../config";
+import { NAVBAR_ITEMS, LOGO_ALT_NAME } from "../config";
 import logo from "../assets/logo.svg";
 import IconButton from "./IconButton";
 import LogoutIcon from "../assets/SVG/LogoutIcon";
@@ -12,10 +12,10 @@ function Navbar({ user, onLogout }) {
         <div className="flex items-center space-x-3">
           <Image
             imageSrc={logo}
-            altName="CPR Logo"
+            altName={LOGO_ALT_NAME}
             width={420}
             height={420}
-            className="h-9 w-9"
+            className="h-5 w-25"
           />
           <span className="text-lg sm:text-xl font-semibold text-black whitespace-nowrap">
             {NAVBAR_ITEMS.title}
@@ -27,7 +27,7 @@ function Navbar({ user, onLogout }) {
               {user.firstName}
             </span>
           )}
-          <IconButton onClick={onLogout} text="Logout">
+          <IconButton onClick={onLogout} text={NAVBAR_ITEMS.logout}>
             <LogoutIcon className="h-5 w-5" />
           </IconButton>
         </div>

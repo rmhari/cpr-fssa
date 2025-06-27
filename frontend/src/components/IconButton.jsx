@@ -4,7 +4,7 @@ function IconButton({ onClick, className = "", children, text, ...props }) {
   return (
     <button
       onClick={onClick}
-      className={`flex items-center justify-center p-2 rounded border border-black bg-white text-black hover:bg-black hover:text-white transition-colors duration-150 ${className}`}
+      className={`cursor-pointer flex items-center justify-center p-2 rounded-md border border-black bg-white text-black hover:bg-black hover:text-white transition-colors duration-200 ${className}`}
       {...props}
     >
       {children}
