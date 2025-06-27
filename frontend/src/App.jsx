@@ -1,18 +1,16 @@
-import "./App.css";
-import Button from "./components/Button";
-import Heading from "./components/Heading";
-import Pagination from "./components/Pagination";
-import { useState } from "react";
+import React from "react";
+import { RouterProvider } from "react-router-dom";
+import router from "./routes/routes";
+
 
 function App() {
   const [currentPage, setCurrentPage] = useState(1);
 
   return (
-    <div >
-      <RouterProvider router={router} />  
-      
-      </div>
-    
+    <div className="w-full font-sans">
+      <RouterProvider router={router} />
+    </div>
+
   );
 }
 

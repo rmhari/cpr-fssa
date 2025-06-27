@@ -1,18 +1,39 @@
-from sqlalchemy import Column, String, Text, DateTime
+from sqlalchemy import Column, Integer, String, Text, DateTime
 from sqlalchemy.dialects.postgresql import UUID
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
+
+from sqlalchemy.orm import declarative_base
 from database import Base
+
 
 class CPREntry(Base):
     __tablename__ = "cpr_entries"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, index=True)
     student_name = Column(String, nullable=False)
-    coach_name = Column(String, nullable=False)
-    students_input = Column(Text)
-    coach_reflection = Column(Text)
-    manager_comment = Column(Text)
+    student_id = Column(UUID(as_uuid=True), index=True)
+    staff_name = Column(String, nullable=False)
+    staff_comments = Column(Text)
+    manager_comments = Column(Text)
     idp = Column(Text)  # individual development plan
-    follow_up = Column(Text)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    color_code = Column(String, nullable=False)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+
+
+class User(Base):
+    __tablename__ = "users"
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    username = Column(String, unique=True, nullable=False)
+    password = Column(String, nullable=False)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+
+
+class Student(Base):
+    __tablename__ = "students"
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    student_name = Column(String, nullable=False)
+    section = Column(String, nullable=True)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
