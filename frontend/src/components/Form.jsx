@@ -1,72 +1,107 @@
 import React, { useState } from "react";
+import DropDown from "./DropDown";  
 import TextArea from "./TextArea";
+import Button from "./Button";
+import Heading from "./Heading";
 
 const Form = () => {
-    const [color, setColor] = useState("");
-    const [role, setRole] = useState("");
-    const [showManagerTextarea, setShowManagerTextarea] = useState(false);
-    const [mainText, setMainText] = useState("");
+    const [color, setColor] = useState(null);
+    const [commentRole, setCommentRole] = useState(null);
     const [managerText, setManagerText] = useState("");
-    const [finalText, setFinalText] = useState("");
-
-    const handleRoleChange = (e) => {
-        setRole(e.target.value);
-        setShowManagerTextarea(e.target.value === "manager");
-    };
+    const [idpText, setIdpText] = useState("");
+    const [managerSubRole, setManagerSubRole] = useState(null);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // handle form submission logic here
         alert("Form submitted!");
     };
 
     return (
-        <form onSubmit={handleSubmit} style={{ maxWidth: 400, margin: "0 auto" }}>
-            <div>
-                <label>Staff Comments:</label>
-                <br />
-                <TextArea
-                    value={mainText}
-                    onChange={(e) => setMainText(e.target.value)}
-                    rows={6}
-                    style={{ width: "100%" }}
+        <form className=" mx-auto p-6 bg-white">
+            <Heading content="Create New CPR" />
+            <div className="mb-4">
+                <label className="block mb-1 font-medium">Staff Comments:</label>
+                <TextArea className="w-full" />
+            </div>
+
+            <div className="mb-4">
+                <label className="block mb-1 font-medium">Color Code:</label>
+                <DropDown
+                    listItems={[
+                        { id: 1, name: "Red" },
+                        { id: 2, name: "Green" },
+                        { id: 3, name: "Yellow" },
+                    ]}
+                    value={color}
+                    onChange={setColor}
                 />
             </div>
-            <div>
-                <label>Color Code:</label>
-                <br />
-                <DropDown listItems={["red", "green", "yellow"]} value={color} onChange={(e) => setColor(e.target.value)} />
+
+            <div className="mb-4">
+                <label className="block mb-1 font-medium">Add comments:</label>
+                <DropDown
+                    listItems={[
+                        { id: 1, name: "Manager" },
+                        { id: 2, name: "IDP" },
+                    ]}
+                    value={commentRole}
+                    onChange={(val) => {
+                        setCommentRole(val);
+                        setManagerSubRole(null); // reset subrole if main role changes
+                    }}
+                />
             </div>
-            <div>
-                <label>Add comments</label>
-                <br />
-                <DropDown listItems={["manager"]} />
-            </div>
-            {showManagerTextarea && (
-                <div>
-                    <label>Manager Text:</label>
-                    <br />
+
+            {commentRole?.name === "Manager" && (
+                <div className="mb-4">
+                    <label className="block mb-1 font-medium">Additional Comments:</label>
                     <TextArea
+                        className="w-full"
                         value={managerText}
                         onChange={(e) => setManagerText(e.target.value)}
-                        rows={2}
-                        style={{ width: "100%" }}
+                    />
+                    <div className="mt-4">
+                        <label className="block mb-1 font-medium">Additional Comments: </label>
+                        <DropDown
+                            listItems={[
+                                { id: 1, name: "Manager" },
+                                { id: 2, name: "IDP" },
+                            ]}
+                            value={managerSubRole}
+                            onChange={setManagerSubRole}
+                        />
+                    </div>
+                    {managerSubRole?.name === "Manager" && (
+                        <div className="mt-4">
+                            <label className="block mb-1 font-medium">Manager Comments :</label>
+                            <TextArea className="w-full" />
+                        </div>
+                    )}
+                    {managerSubRole?.name === "IDP" && (
+                        <div className="mt-4">
+                            <label className="block mb-1 font-medium">IDP :</label>
+                            <TextArea className="w-full" />
+                        </div>
+                    )}
+                </div>
+            )}
+
+            {commentRole?.name === "IDP" && (
+                <div className="mb-4">
+                    <label className="block mb-1 font-medium">IDP:</label>
+                    <TextArea
+                        className="w-full"
+                        value={idpText}
+                        onChange={(e) => setIdpText(e.target.value)}
                     />
                 </div>
             )}
-            <div>
-                <label>IDP:</label>
-                <br />
-                <TextArea
-                    value={finalText}
-                    onChange={(e) => setFinalText(e.target.value)}
-                    rows={2}
-                    style={{ width: "100%" }}
-                />
-            </div>
-            <Button style={{ marginTop: 10 }} onClick={handleSubmit}>
-                Submit
-            </Button>
+
+            <Button
+                className="mt-4 w-full"
+                onClick={handleSubmit}
+                content="Submit"
+            />
         </form>
     );
 };

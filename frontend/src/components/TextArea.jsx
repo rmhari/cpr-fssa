@@ -15,7 +15,8 @@ function TextArea({
       value={value}
       onChange={onChange}
       rows={rows}
-      className={`w-6/12 px-3 py-2 border border-black rounded-lg bg-white text-black placeholder-gray-500 focus:border-transparent resize-none max-h-48 ${className} ${DEFAULT_TRANSITION}`}
+      className={`px-3 py-2 border border-black rounded-lg bg-white text-black placeholder-gray-500 focus:border-transparent resize-none max-h-48 ${className} ${DEFAULT_TRANSITION}`}
+      style={{ width: "auto", minWidth: "600px" }}
       {...props}
     />
   );
