@@ -1,5 +1,6 @@
 import React from "react";
 import { DEFAULT_TRANSITION } from "../config/transitions";
+import { twMerge } from "tailwind-merge";
 
 function TextArea({
   placeholder = "Enter comments...",
@@ -15,9 +16,10 @@ function TextArea({
       value={value}
       onChange={onChange}
       rows={rows}
-      className={`px-3 py-2 border border-black rounded-lg bg-white text-black placeholder-gray-500 focus:border-transparent resize-none max-h-48 ${className} ${DEFAULT_TRANSITION}`}
-      style={{ width: "auto", minWidth: "600px" }}
-      {...props}
+      className={twMerge(
+        `px-3 py-2 border border-black rounded-lg bg-white text-black placeholder-gray-500 w-full focus:border-transparent resize-none max-h-48 ${DEFAULT_TRANSITION}`,
+        className
+      )}
     />
   );
 }

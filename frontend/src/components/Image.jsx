@@ -1,4 +1,5 @@
 import React from "react";
+import { twMerge } from "tailwind-merge";
 
 function Image({ imageSrc, altName, width, height, className = "" }) {
   return (
@@ -7,7 +8,7 @@ function Image({ imageSrc, altName, width, height, className = "" }) {
       alt={altName}
       width={width}
       height={height}
-      className={className}
+      className={twMerge(className)}
     />
   );
 }

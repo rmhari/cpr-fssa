@@ -69,9 +69,12 @@ function Landing() {
           </div>
 
           <div>
-            <Button type="submit" disabled={isLoading} className="w-full">
-              {isLoading ? "Logging in..." : "Sign In"}
-            </Button>
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="w-full"
+              content={isLoading ? "Logging in..." : "Sign In"}
+            ></Button>
           </div>
         </form>
 

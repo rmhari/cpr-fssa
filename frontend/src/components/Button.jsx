@@ -1,29 +1,24 @@
-function Button({ content, onClick, isActive = false, disabled = false }) {
-  let bgColor;
-  if (disabled) {
-    bgColor = "#A0A0A0"; // Gray if disabled
-  } else if (isActive) {
-    bgColor = "#3A8BC9"; // Darker dark blue if active
-  } else {
-    bgColor = "#12BEF0"; // Default blue
-  }
+import { twMerge } from "tailwind-merge";
 
+function Button({
+  content,
+  onClick,
+  isActive = false,
+  disabled = false,
+  className = "",
+}) {
   return (
     <button
-      className={`m-2 px-3 py-1 text-white font-bold rounded-md transition w-fit
-        ${!disabled && !isActive ? "hover:bg-[#0ea5e9] hover:scale-105" : ""}
-      `}
-      style={{
-        backgroundColor: bgColor,
-        cursor: disabled ? "not-allowed" : "pointer",
-        border: "none",
-        transition: "background-color 0.2s, transform 0.2s"
-      }}
+      className={twMerge(
+        `px-3 py-2 transition w-full border rounded-md bg-black text-white hover:bg-white hover:text-black cursor-pointer hover:border-black hover:border ${
+          !disabled && !isActive ? "hover:scale-100" : ""
+        }`,
+        className
+      )}
       onClick={onClick}
       disabled={disabled}
     >
       {content}
-
     </button>
   );
 }
