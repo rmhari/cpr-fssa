@@ -1,30 +1,79 @@
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.ext.asyncio import AsyncSession
-import crud
-from database import get_async_db  # Use async DB dependency
-from schemas import cprs as schemas
+from sqlalchemy.orm import Session
+from uuid import UUID
+from typing import Optional, List
+from fastapi import Query
+from datetime import datetime
 
-router = APIRouter(prefix="/cpr", tags=["CPR"])
+from database import SessionLocal
+from crud import cpr as crud_cpr
+import schemas
 
-@router.post("/", response_model=schemas.CPREntryResponse)
-async def create_cpr(entry: schemas.CPREntryCreate, db: AsyncSession = Depends(get_async_db)):
-    return await crud.create_cpr_entry(db, entry)
+from .auth import get_current_user
+import models
 
-@router.get("/", response_model=list[schemas.CPREntryResponse])
-async def read_cpr(skip: int = 0, limit: int = 10, db: AsyncSession = Depends(get_async_db)):
-    return await crud.get_cpr_entries(db, skip, limit)
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
-@router.get("/{entry_id}", response_model=schemas.CPREntryResponse)
-async def read_cpr_entry(entry_id: str, db: AsyncSession = Depends(get_async_db)):
-    db_entry = await crud.get_cpr_entry(db, entry_id)
-    if db_entry is None:
-        raise HTTPException(status_code=404, detail="Entry not found")
-    return db_entry
+router = APIRouter(
+    prefix="/cpr",
+    tags=["CPR Entries"]
+)
 
-@router.put("/{entry_id}", response_model=schemas.CPREntryResponse)
-async def update_cpr(entry_id: str, updates: schemas.CPREntryCreate, db: AsyncSession = Depends(get_async_db)):
-    return await crud.update_cpr_entry(db, entry_id, updates)
+# ✅ Get all CPRs 
+@router.get("/", response_model=list[schemas.CPREntryOut])
+def get_all(db: Session = Depends(get_db), user: models.User = Depends(get_current_user)):
+    return crud_cpr.get_all_cprs(db)
 
-@router.delete("/{entry_id}")
-async def delete_cpr(entry_id: str, db: AsyncSession = Depends(get_async_db)):
-    return await crud.delete_cpr_entry(db, entry_id)
+# ✅ Get CPR by ID
+@router.get("/{cpr_id}", response_model=schemas.CPREntryOut)
+def get_by_id(cpr_id: UUID, db: Session = Depends(get_db), user: models.User = Depends(get_current_user)):
+    cpr = crud_cpr.get_cpr_by_id(db, cpr_id)
+    if not cpr:
+        raise HTTPException(status_code=404, detail="CPR entry not found")
+    return cpr
+
+# ✅ Create CPR
+@router.post("/", response_model=schemas.CPREntryOut)
+def create(cpr: schemas.CPREntryCreate, db: Session = Depends(get_db), user: models.User = Depends(get_current_user)):
+    return crud_cpr.create_cpr(db, cpr)
+
+# ✅ Update CPR
+@router.put("/{cpr_id}", response_model=schemas.CPREntryOut)
+def update(cpr_id: UUID, cpr: schemas.CPREntryUpdate, db: Session = Depends(get_db), user: models.User = Depends(get_current_user)):
+    updated = crud_cpr.update_cpr(db, cpr_id, cpr)
+    if not updated:
+        raise HTTPException(status_code=404, detail="CPR entry not found")
+    return updated
+
+# ✅ Delete CPR
+@router.delete("/{cpr_id}", response_model=schemas.CPREntryOut)
+def delete(cpr_id: UUID, db: Session = Depends(get_db), user: models.User = Depends(get_current_user)):
+    deleted = crud_cpr.delete_cpr(db, cpr_id)
+    if not deleted:
+        raise HTTPException(status_code=404, detail="CPR entry not found")
+    return deleted
+
+# ✅ Get all CPRs with optional filters
+@router.get("/", response_model=List[schemas.CPREntryOut])
+def get_all_cprs(
+    student_id: Optional[UUID] = Query(None),
+    staff_name: Optional[str] = Query(None),
+    color_code: Optional[str] = Query(None),
+    start_date: Optional[datetime] = Query(None),
+    end_date: Optional[datetime] = Query(None),
+    db: Session = Depends(get_db),
+    user: models.User = Depends(get_current_user)
+):
+    return crud_cpr.get_filtered_cprs(
+        db=db,
+        student_id=student_id,
+        staff_name=staff_name,
+        color_code=color_code,
+        start_date=start_date,
+        end_date=end_date
+    )
