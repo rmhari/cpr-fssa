@@ -192,11 +192,16 @@ class Api {
       throw new Error("Error while fetching data:", +err);
     }
   }
-  async updateCPRById(id) {
+  async updateCPRById({ id, student_name, section, folder_link }) {
     try {
       const config = this.fetchConfig();
       const res = await axios.put(
         this.base_url + endPoint.cpr + `${id}`,
+        {
+          student_name,
+          section,
+          folder_link,
+        },
         config
       );
       return res;
@@ -212,6 +217,16 @@ class Api {
         this.base_url + endPoint.cpr + `${id}`,
         config
       );
+      return res;
+    } catch (err) {
+      throw new Error("Error while fetching data:", +err);
+    }
+  }
+
+  async getAllCoaches() {
+    try {
+      const config = this.fetchConfig();
+      const res = await axios.get(this.base_url + endPoint.coaches, config);
       return res;
     } catch (err) {
       throw new Error("Error while fetching data:", +err);

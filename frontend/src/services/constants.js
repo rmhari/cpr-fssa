@@ -7,6 +7,7 @@ const endPoints = {
   login: "/auth/login",
   resetPassword: "/auth/reset-password",
   cpr: "/cpr",
+  coaches: "/coaches",
 };
 
 export default endPoints;
