@@ -9,7 +9,12 @@ function Landing() {
     username: "",
     password: "",
   });
+  const [resetData, setResetData] = useState({
+    username: "",
+    newPassword: "",
+  });
   const [isLoading, setIsLoading] = useState(false);
+  const [clicked, setClicked] = useState(true);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -19,15 +24,25 @@ function Landing() {
     }));
   };
 
+  const handleResetInputChange = (e) => {
+    const { name, value } = e.target;
+    setResetData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+  };
 
-    // Simulate API call
+  const handleReset = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
     setTimeout(() => {
-      console.log("Login attempt:", formData);
+      console.log("Reset password attempt:", resetData);
       setIsLoading(false);
-      // Add your login logic here
     }, 1000);
   };
 
@@ -42,51 +57,96 @@ function Landing() {
               className="h-36 w-36"
             />
           </div>
-          <div className="text-2xl text-black">FSSA Academy</div>
+          <div className="text-2xl text-black">
+            {clicked ? "FSSA Academy" : "Reset Your Password"}
+          </div>
         </div>
 
-        <form onSubmit={handleLogin} className="space-y-6">
-          <div>
-            <Input
-              type="text"
-              name="username"
-              placeholder="Username"
-              value={formData.username}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-
-          <div>
-            <Input
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-
-          <div>
-            <Button
-              type="submit"
-              disabled={isLoading}
-              className="w-full"
-              content={isLoading ? "Logging in..." : "Sign In"}
-            ></Button>
-          </div>
-        </form>
-
-        {/* Forgot Password Link */}
-        <div className="text-right mt-1">
-          <a
-            href="#"
-            className="text-sm text-gray-500 hover:text-gray-700 transition-colors duration-200"
-          >
-            Forgot password?
-          </a>
-        </div>
+        {clicked ? (
+          <>
+            <form onSubmit={handleLogin} className="space-y-6">
+              <div>
+                <Input
+                  type="text"
+                  name="username"
+                  placeholder="Username"
+                  value={formData.username}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div>
+                <Input
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div>
+                <Button
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full"
+                  content={isLoading ? "Waiting" : "Sign In"}
+                ></Button>
+              </div>
+            </form>
+            <div className="text-right mt-1">
+              <button
+                type="button"
+                className="text-sm text-gray-500 hover:text-gray-700 transition-colors duration-200 underline"
+                onClick={() => setClicked(false)}
+              >
+                Forgot password?
+              </button>
+            </div>
+          </>
+        ) : (
+          <>
+            <form onSubmit={handleReset} className="space-y-6">
+              <div>
+                <Input
+                  type="text"
+                  name="username"
+                  placeholder="Username"
+                  value={resetData.username}
+                  onChange={handleResetInputChange}
+                  required
+                />
+              </div>
+              <div>
+                <Input
+                  type="password"
+                  name="newPassword"
+                  placeholder="Reset New Password"
+                  value={resetData.newPassword}
+                  onChange={handleResetInputChange}
+                  required
+                />
+              </div>
+              <div>
+                <Button
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full"
+                  content={isLoading ? "Reset Password" : "Waiting"}
+                ></Button>
+              </div>
+            </form>
+            <div className="text-right mt-1">
+              <button
+                type="button"
+                className="text-sm text-gray-500 hover:text-gray-700 transition-colors duration-200 underline"
+                onClick={() => setClicked(true)}
+              >
+                Back to login
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

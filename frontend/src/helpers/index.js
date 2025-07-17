@@ -12,3 +12,50 @@ export const LIST_ITEMS = [
   { id: 11, name: "Lincoln" },
   { id: 12, name: "Grant" },
 ];
+
+export const LIST_COACHES = [
+  {
+    id: 1,
+    name: "Dharshini",
+  },
+  {
+    id: 2,
+    name: "Haripriya",
+  },
+  {
+    id: 3,
+    name: "Sreekala",
+  },
+  {
+    id: 4,
+    name: "Sukirti",
+  },
+  {
+    id: 5,
+    name: "Niroshini",
+  },
+  {
+    id: 6,
+    name: "Anisha",
+  },
+  {
+    id: 7,
+    name: "Sathiyapramod",
+  },
+  {
+    id: 8,
+    name: "Bharathwaj",
+  },
+  {
+    id: 9,
+    name: "Ahamed",
+  },
+  {
+    id: 10,
+    name: "Rukmani",
+  },
+  {
+    id: 11,
+    name: "Gomathi",
+  },
+];

@@ -1,5 +1,6 @@
 export const NAVBAR_ITEMS = {
   title: "CPR Analysis",
+  welcome: "Welcome",
   logout: "Logout",
 };
 

@@ -26,6 +26,10 @@ function Navbar({ user, onLogout }) {
           </span>
         </div>
         <div className="flex flex-col items-end gap-2 sm:flex-row sm:items-center sm:space-x-2 sm:gap-0">
+          <span className="text-lg sm:text-xl font-light text-gray-900 whitespace-nowrap">
+            {NAVBAR_ITEMS.welcome}, &nbsp;
+            {localStorage.getItem("name") ?? "Sreekala"}
+          </span>
           {user && (
             <span className="hidden sm:inline text-sm text-gray-700">
               {user.firstName}
